@@ -8,49 +8,37 @@ public class Candy : MonoBehaviour
     [Header("Board Positions")]
     public int row;
     public int column;
-    public int prevRow;
-    public int prevCol;
-
-    public int targetX;
-    public int targetY;
-
-    [Header("Touch Positions")]
-    public Vector2 firstTouchPos;
-    public Vector2 finalTouchPos;
 
     public bool isMatched;
 
-    private Vector2 tempPos;
-    private WaitForSeconds delay = new WaitForSeconds(.1f);
+    private int prevRow;
+    private int prevCol;
+    private int targetX;
+    private int targetY;
 
+    private Vector2 tempPos;
+    private Vector2 firstTouchPos;
+    private Vector2 finalTouchPos;
+
+    private float swipeAngle;
+    private float swipeResist;
+    
+    private WaitForSeconds delay = new WaitForSeconds(.1f);
     private Board boardScript;
     private FýndMatches fýndMatchesScript;
     private Camera cam;
-    
-    public float swipeAngle;
-    public float swipeResist;
-
     private GameObject otherCandy;
-    // Start is called before the first frame update
+
     void Start()
     {
         cam = Camera.main;
         boardScript = FindObjectOfType<Board>();
         fýndMatchesScript = FindObjectOfType<FýndMatches>();
-        //targetX = (int)transform.position.x;
-        //targetY = (int)transform.position.y;
-        //column = targetX;
-        //row = targetY;
-        //prevCol = column;
-        //prevRow = row;
-
 
     }
-
-    
+        
     void Update()
     {
-
         if(isMatched)
         {
             boardScript.DestroyMatches();
@@ -58,8 +46,7 @@ public class Candy : MonoBehaviour
         }
         targetX = column;
         targetY = row;
-        MoveTheCandys();
-        
+        MoveTheCandys();      
       
     }
  
@@ -74,13 +61,11 @@ public class Candy : MonoBehaviour
 
     private void OnMouseDown() {
 
-        firstTouchPos = cam.ScreenToWorldPoint(Input.mousePosition);
-    
+        firstTouchPos = cam.ScreenToWorldPoint(Input.mousePosition);    
     }
     private void OnMouseUp()
     {
-        finalTouchPos = cam.ScreenToWorldPoint(Input.mousePosition);
-       
+        finalTouchPos = cam.ScreenToWorldPoint(Input.mousePosition);       
         CalculateAngel();
     }
     void CalculateAngel()
@@ -157,10 +142,8 @@ public class Candy : MonoBehaviour
             }
             
             otherCandy = null;
-        }
-       
+        }   
         
-
 
     }
     void MoveHorizontally()

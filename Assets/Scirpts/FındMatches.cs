@@ -7,12 +7,10 @@ public class FındMatches : MonoBehaviour
     private Board boardScript;
    
     public List<GameObject> currentMaches = new List<GameObject>();
-    // Start is called before the first frame update
+    
     void Start()
     {
-        boardScript = FindObjectOfType<Board>();
-        
-     
+        boardScript = FindObjectOfType<Board>();          
         
     }
     

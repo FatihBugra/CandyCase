@@ -4,41 +4,30 @@ using UnityEngine;
 
 public class Board : MonoBehaviour
 {
+    [Header("Positions")]
     public int height;
     public int width;
     public int offSet;
+
     public GameObject backgroundTile;
+
+    [Header("Candy")]
     public GameObject[] candys;
+    public  GameObject[,] allCandys;
 
     public GameObject explosion;
-   
-    private Background[,] allTile; 
-    public  GameObject[,] allCandys;
-    // Start is called before the first frame update
+
     void Start()
     {
         
-        allTile = new Background[width,height];
+       
         allCandys = new GameObject[width,height];
-        SetUpBoard();
+     
         SetUpTheCandys();
 
     }
 
-   void SetUpBoard()
-   {
-        for (int i = 0; i < width; i++)
-        {
-            for (int j = 0; j < height; j++)
-            {
-                Vector2 position = new Vector2(i, j + offSet);
-                GameObject Background = Instantiate(backgroundTile, position, Quaternion.identity, transform) as GameObject;
-                Background.name = "(" + i + "," + j + ")";
-                
-            }
-            
-        }
-   }
+   
    void SetUpTheCandys()
    {
 
@@ -49,16 +38,16 @@ public class Board : MonoBehaviour
                 
                 Vector2 position = new Vector2(i,j + offSet);               
                 int chosenCandy = Random.Range(0, candys.Length);
-               // int maxÝter = 0;
-                while (AwoidMatch(i, j, candys[chosenCandy])) //&& maxÝter < 100)
+               
+                while (AwoidMatch(i, j, candys[chosenCandy]))
                 {
                     chosenCandy = Random.Range(0, candys.Length);
-                    //maxÝter++;
-                    //Debug.Log(maxÝter);
+                  
                 }
                 
                 GameObject candy = Instantiate(candys[chosenCandy], position, Quaternion.identity, transform) as GameObject;
                 Candy candyComponet = candy.GetComponent<Candy>();
+
                 candyComponet.row = j;
                 candyComponet.column = i;
 
@@ -163,18 +152,15 @@ public class Board : MonoBehaviour
                 if(allCandys[i,j] == null)
                 {
                     Vector2 position = new Vector2(i, j + offSet);
+
                     int neWChoosenCandy = Random.Range(0, candys.Length);
-                    GameObject newCandy = Instantiate(candys[neWChoosenCandy], position, Quaternion.identity, transform) as GameObject;
+
+                    GameObject newCandy = Instantiate(candys[neWChoosenCandy], position, Quaternion.identity, transform) as GameObject;                   
+                    allCandys[i, j] = newCandy;
 
                     Candy candyComponet = newCandy.GetComponent<Candy>();
-                    allCandys[i, j] = newCandy;
-                    candyComponet.row = j;
-                    candyComponet.column = i;
-                    
-                  // newCandy.GetComponent<Candy>().row = j;
-                  //newCandy.GetComponent<Candy>().column = i;
-
-
+                    candyComponet.row = j;                    
+                    candyComponet.column = i;      
                 }
             }
         }
@@ -189,7 +175,6 @@ public class Board : MonoBehaviour
                 {
                     if(allCandys[i,j].GetComponent<Candy>().isMatched)
                     {
-                        
                         return true;
                     }
                 }
