@@ -21,3 +21,14 @@ This project demonstrates **grid-based tile management, match detection, and til
 ## License
 
 MIT License.
+
+---
+
+## Author
+
+Fatih Buğra Durmuş
+
+Feel free to fork, test, and modify the project for experimenting with match-3 mechanics in Unity.
+
+---
+
